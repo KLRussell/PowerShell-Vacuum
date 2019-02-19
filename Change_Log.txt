@@ -1,0 +1,56 @@
+#############################################################################################################
+					    ***Change Log***
+		Created by Sam Escolas and Edited/Upgraded by Kevin Russell & Shane Johnson
+#############################################################################################################
+
+Version 1.0
+	- Vacuum created to update BMI/PCI items on ODS by reading files in sub directories
+	- This version utilized VBA workbooks that produced CSV files, which powershell vacuumed into updates
+
+Version 2.0
+	- Added capability to dispute PCI disputes to Email Extract
+	- Fixed issue where Audit_Result for item being disputed flipped but no disputes generated
+	- Fixed issue where Email Disputes didn't file disputes
+	- Fixed limitations algorithm to find limitations if user didn't specify
+	- Fixed issue where script wasn't updating PCI BMB correctly
+	- Renamed process_updates.ps1 to A_Vacuum_Automation.ps1
+	- Renamed Claim3.ps1 to B_Vacuum_Module.psm1
+	- Renamed CAT_Functions to CAT_Menu.ps1
+	- Migrated dependent functions in CAT_Functions to B_Vacuum_Module.psm1
+	- Migrated PCI functionality to A_Vacuum_Automation.ps1 and B_Vacuum_Module.psm1
+	- Restructured folders and files to be more organized and uniformed
+	- Added 02_Event_Log directory to hold daily logs of Vacuum actions
+	- Removed multi-threading for dispute creation and tighten code to not exit script randomly
+	- Removed functionality of exiting vacuum between 5pm to 6pm
+	- Created new sub-directories for sending items to provisioning/LV/Seed Disputes/Non-Seed disputes
+		a. This functionality will be added in a future version
+	- Re-organize code to migrate dependent ODS table variables to the top of B_Vacuum_Module.psm1
+	- Enhanced query engine to error catch more effectively and re-attempt querying if it fails
+	- Added hadoop support to pull table seeds for creation of disputes
+	- Cleaned CAT_Menu.ps1 to not have old menu items
+	- Fixed multi function in CAT_Menu.ps1 to work for a range of menu items
+	- Added README.txt and Installation.txt files for guides
+	- Fixed SQL query for workbooks
+	- Added functionality in workbooks to request refresh before refreshing data in workbooks
+	- Fixed validations in workbooks
+
+Version 2.1
+	- Added Change_Log.txt to detail version changes
+	- Fixed NRC/FRAC disputes not filing when BMI/PCI is disputed
+	- Renamed A_Vacuum_Automation.ps1 to Vacuum_Automation.ps1
+	- Renamed B_Vacuum_Module.psm1 to Vacuum_Module.psm1
+	- Migrated general Vacuum variables to Vacuum_Settings.xml
+	- Fixed Vacuum_Automation.ps1 and CAT_Menu.ps1 to automaticallly find the current path script is at
+	- Added error catching in loop within Vacuum_Automation.ps1
+	- Added Remote command functionallity in CAT_Menu.ps1
+		a. This will allow individuals to restart/stop Vacuum that is running on different machine
+		b. Individuals can grab the current status from the Vacuum, which is running on a different machine
+	- Added preventative measures to prevent more than one vacuum running at a time
+		a. This feature has C# in Vacuum_Automation.ps1 (Redundancy code has been placed to replace if needed)
+
+Version 2.2
+	- Included variables $($_.Source_TBL), $($_.Source_ID), and $($_.Rep) to Mapping error messages in Vacuum_Automation.PS1 
+	which outputs to 02_Event_Log. 
+	- Included several additional log events in the disputing process that emphasizes Found seeds and Notices when system fails to find cost details for seeds
+		(Failure to find cost seeds is usually stemmed from MRC seeds having zero or negative cost)
+	- Fixed issue with insert statement where NULL values in staging table does not have a comma seperator if existing data exists
