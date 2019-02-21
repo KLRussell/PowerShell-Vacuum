@@ -14,6 +14,7 @@ $Global:Maps=0;
 $Global:Disputes=0;
 $Global:Other=0;
 $Global:Errors=0;
+$Schema='';
 
 #Import the claim class definition for use creating disputes
 Import-Module "$Global:SourceCodeDir\Vacuum_Module.psm1";
@@ -273,7 +274,7 @@ Class Update
                 "TF" { "ORDER_800 WHERE ORD_POTS_ANI_BIL"; }
             }
 
-            $sql = "SELECT COUNT(*) FROM CustomerInventory.$table = '$gs_srvID'";
+            $sql = "SELECT COUNT(*) FROM $schema.$table = '$gs_srvID'";
             Return ((Query($sql))[0] -gt 0);
         }
 
